@@ -1,0 +1,13 @@
+<SwipeRow rightOpenValue={-100}>
+<View
+  style={{
+    height: 40,
+    backgroundColor: 'red',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  }}>
+  <Text>Hello</Text>
+</View>
+<View style={{height: 40, backgroundColor: 'blue'}} />
+</SwipeRow>
