@@ -4,42 +4,52 @@ import {TodoItem} from './type';
 
 type PropTypes = {
   data: TodoItem;
-  onDeleteItem: (id: string | number) => void;
+  onCompleteItem: (id: string) => void;
 };
-const Item = ({data, onDeleteItem}: PropTypes) => {
+
+const Item = ({data, onCompleteItem}: PropTypes) => {
   const onPressItem = () => {
-    // delete item
-    onDeleteItem(data.id);
+    onCompleteItem(data.id);
   };
 
   return (
     <TouchableOpacity style={styles.container} onPress={onPressItem}>
-      <View style={styles.circle} />
-      <Text style={styles.text}>{data.title}</Text>
+      {/* handle style for checked and unchecked circle here */}
+      <View style={styles.uncheckedCircle} />
+      <Text
+        style={[
+          styles.text,
+          data.isCompleted && {textDecorationLine: 'line-through'},
+        ]}>
+        {data.title}
+      </Text>
     </TouchableOpacity>
   );
 };
 const styles = StyleSheet.create({
   container: {
-    height: 100,
-    backgroundColor: 'red',
-    borderRadius: 10,
+    height: 60,
+    backgroundColor: 'rgb(5,27,85)',
+    borderRadius: 15,
     flexDirection: 'row',
     alignItems: 'center',
     padding: 16,
+    marginTop: 10,
+    marginHorizontal: 20,
   },
   text: {
     color: 'white',
     fontSize: 20,
     marginLeft: 16,
   },
-  circle: {
+  uncheckedCircle: {
     width: 30,
     height: 30,
     borderRadius: 15,
     borderWidth: 2,
-    borderColor: 'rbg(211,40,236)',
+    borderColor: 'rgb(233,41,252)',
   },
+  checkedCircle: {},
 });
 
 export default Item;
