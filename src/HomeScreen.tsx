@@ -13,9 +13,7 @@ const HomeScreen = () => {
     },
   ]);
 
-  const addItem = (item: TodoItem) => {
-    setTodoList([...todoList, item]);
-  };
+  const addItem = (item: TodoItem) => {};
 
   const readItem = (id: string) => {};
 
