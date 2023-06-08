@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {SwipeRow} from 'react-native-swipe-list-view';
 import {TodoItem} from './type';
 
 type PropTypes = {
@@ -13,20 +14,43 @@ const Item = ({data, onCompleteItem}: PropTypes) => {
   };
 
   return (
-    <TouchableOpacity style={styles.container} onPress={onPressItem}>
-      {/* handle style for checked and unchecked circle here */}
-      <View style={styles.uncheckedCircle} />
-      <Text
-        style={[
-          styles.text,
-          data.isCompleted && {textDecorationLine: 'line-through'},
-        ]}>
-        {data.title}
-      </Text>
-    </TouchableOpacity>
+    <SwipeRow rightOpenValue={-150}>
+      <View style={styles.actionContainer}>
+        <TouchableOpacity style={styles.actionBtn}>
+          <Text>Delete</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.actionBtn}>
+          <Text>Edit</Text>
+        </TouchableOpacity>
+      </View>
+      <TouchableOpacity style={styles.container} onPress={onPressItem}>
+        <View style={styles.uncheckedCircle} />
+        <Text
+          style={[
+            styles.text,
+            data.isCompleted && {textDecorationLine: 'line-through'},
+          ]}>
+          {data.title}
+        </Text>
+      </TouchableOpacity>
+    </SwipeRow>
   );
 };
 const styles = StyleSheet.create({
+  actionContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    paddingEnd: 20,
+  },
+  actionBtn: {
+    padding: 10,
+    backgroundColor: 'green',
+    marginHorizontal: 5,
+    borderRadius: 4,
+    paddingHorizontal: 10,
+  },
   container: {
     height: 60,
     backgroundColor: 'rgb(5,27,85)',
@@ -34,7 +58,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     padding: 16,
-    marginTop: 10,
+    marginVertical: 10,
     marginHorizontal: 20,
   },
   text: {

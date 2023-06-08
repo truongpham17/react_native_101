@@ -4,6 +4,7 @@ import {FlatList, SafeAreaView, StyleSheet, View} from 'react-native';
 import Item from './Item';
 import type {TodoList, TodoItem} from './type';
 import AddItemIcon from './AddItemIcon';
+
 const HomeScreen = () => {
   const [todoList, setTodoList] = useState<TodoList>([
     {
@@ -11,15 +12,15 @@ const HomeScreen = () => {
       title: 'First thing to do',
       isCompleted: false,
     },
-    {
-      id: '1',
-      title: 'First thing to do',
-      isCompleted: false,
-    },
   ]);
 
-  const addItem = (item: TodoItem) => {
-    setTodoList([...todoList, item]);
+  const addItem = (title: string) => {
+    const newItem = {
+      id: todoList.length.toString(),
+      title,
+      isCompleted: false,
+    };
+    setTodoList([...todoList, newItem]);
   };
 
   const readItem = (id: string) => {};
@@ -41,9 +42,8 @@ const HomeScreen = () => {
     );
   };
 
-  const renderItem = props => {
-    console.log({item: props.item});
-    return <Item data={props.item} onCompleteItem={onCompleteItem} />;
+  const renderItem = ({item}: {item: TodoItem}) => {
+    return <Item data={item} onCompleteItem={onCompleteItem} />;
   };
 
   return (
