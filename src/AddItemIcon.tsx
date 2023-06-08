@@ -7,14 +7,31 @@ import {
   TextInput,
   View,
 } from 'react-native';
+import {TodoItem} from './type';
 
-const AddItemIcon = () => {
+type PropsType = {
+  onAddItem: (item: TodoItem) => void;
+};
+
+const AddItemIcon = (props: PropsType) => {
+  const {onAddItem: addItem} = props;
+
   const [modalVisible, setModalVisibility] = useState(false);
   const [inputValue, setInputValue] = useState('');
 
   const onAddItem = () => {
     setModalVisibility(false);
+    const item: TodoItem = {
+      id: '3',
+      title: inputValue,
+      isCompleted: false,
+    };
+    addItem(item);
     // handle add new item here
+  };
+
+  const closeModal = () => {
+    setModalVisibility(false);
   };
 
   return (
@@ -28,7 +45,7 @@ const AddItemIcon = () => {
         visible={modalVisible}
         transparent
         animationType="fade"
-        onRequestClose={() => setModalVisibility(false)}>
+        onRequestClose={closeModal}>
         <View style={styles.modalContainer}>
           <View style={styles.addContainer}>
             <TextInput
@@ -41,7 +58,9 @@ const AddItemIcon = () => {
               }}
               placeholderTextColor={'#555555'}
               // handle change text here
-              onChangeText={() => {}}
+              onChangeText={text => {
+                setInputValue(text);
+              }}
             />
             <TouchableOpacity style={styles.addBtn} onPress={onAddItem}>
               <Text style={styles.doneTxt}>Done</Text>
