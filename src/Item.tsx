@@ -1,5 +1,11 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import {SwipeRow} from 'react-native-swipe-list-view';
 import {TodoItem} from './type';
 
@@ -14,7 +20,7 @@ const Item = ({data, onCompleteItem}: PropTypes) => {
   };
 
   return (
-    <SwipeRow rightOpenValue={-150}>
+    <SwipeRow rightOpenValue={-150} style={{marginTop: 20}}>
       <View style={styles.actionContainer}>
         <TouchableOpacity style={styles.actionBtn}>
           <Text>Delete</Text>
@@ -23,16 +29,18 @@ const Item = ({data, onCompleteItem}: PropTypes) => {
           <Text>Edit</Text>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity style={styles.container} onPress={onPressItem}>
-        <View style={styles.uncheckedCircle} />
-        <Text
-          style={[
-            styles.text,
-            data.isCompleted && {textDecorationLine: 'line-through'},
-          ]}>
-          {data.title}
-        </Text>
-      </TouchableOpacity>
+      <TouchableWithoutFeedback onPress={onPressItem}>
+        <View style={styles.container}>
+          <View style={styles.uncheckedCircle} />
+          <Text
+            style={[
+              styles.text,
+              data.isCompleted && {textDecorationLine: 'line-through'},
+            ]}>
+            {data.title}
+          </Text>
+        </View>
+      </TouchableWithoutFeedback>
     </SwipeRow>
   );
 };
@@ -58,7 +66,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     padding: 16,
-    marginVertical: 10,
+    // marginVertical: 10,
     marginHorizontal: 20,
   },
   text: {
