@@ -23,10 +23,10 @@ const Item = ({data, onCompleteItem}: PropTypes) => {
     <SwipeRow rightOpenValue={-150} style={{marginTop: 20}}>
       <View style={styles.actionContainer}>
         <TouchableOpacity style={styles.actionBtn}>
-          <Text>Delete</Text>
+          <Text style={{color: 'white'}}>Delete</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.actionBtn}>
-          <Text>Edit</Text>
+          <Text style={{color: 'white'}}>Edit</Text>
         </TouchableOpacity>
       </View>
       <TouchableWithoutFeedback onPress={onPressItem}>
