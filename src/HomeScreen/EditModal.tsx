@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -10,7 +10,7 @@ import {
 
 export type EditModalProps = {
   onPressOk: (title: string) => void;
-  defaultValue?: string;
+  defaultValue: string;
   modalVisible: boolean;
   onCloseModal: () => void;
 };
@@ -22,6 +22,12 @@ const EditModal = ({
   onCloseModal,
 }: EditModalProps) => {
   const [inputValue, setInputValue] = useState(defaultValue || '');
+
+  useEffect(() => {
+    if (modalVisible === true) {
+      setInputValue(defaultValue);
+    }
+  }, [modalVisible, defaultValue]);
 
   const onConfirm = () => {
     onPressOk(inputValue);

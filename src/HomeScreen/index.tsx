@@ -1,4 +1,3 @@
-// import
 import React, {useState} from 'react';
 import {FlatList, SafeAreaView, StyleSheet, View} from 'react-native';
 import Item from './Item';
@@ -16,16 +15,23 @@ const HomeScreen = () => {
 
   const addItem = (title: string) => {
     const newItem = {
-      id: todoList.length.toString(),
+      id: Date.now().toString(),
       title,
       isCompleted: false,
     };
     setTodoList([...todoList, newItem]);
   };
 
-  const readItem = (id: string) => {};
-
-  const updateItem = (id: string, data: TodoItem) => {};
+  const updateItem = (id: string, title: string) => {
+    setTodoList(
+      todoList.map(item => {
+        if (item.id === id) {
+          return {...item, title};
+        }
+        return item;
+      }),
+    );
+  };
 
   const deleteItem = (id: string) => {
     setTodoList(todoList.filter(item => item.id !== id));
@@ -43,7 +49,14 @@ const HomeScreen = () => {
   };
 
   const renderItem = ({item}: {item: TodoItem}) => {
-    return <Item data={item} onCompleteItem={onCompleteItem} />;
+    return (
+      <Item
+        data={item}
+        onCompleteItem={onCompleteItem}
+        onDeleteItem={deleteItem}
+        onUpdateItem={updateItem}
+      />
+    );
   };
 
   return (
