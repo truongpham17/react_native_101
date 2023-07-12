@@ -7,8 +7,15 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import LoginTextfieldItem from '../component/LoginTextFieldItem';
+import axios from 'axios';
+import {API_ENDPOINT} from '../constant/url';
+import {User} from '../types/user';
 
-const LoginScreen = () => {
+const SignUpScreen = ({
+  onSuccessfullyLogin,
+}: {
+  onSuccessfullyLogin: (user: User) => void;
+}) => {
   const [user, setUser] = useState({
     email: '',
     password: '',
@@ -20,6 +27,19 @@ const LoginScreen = () => {
 
   const onChangePassword = (password: string) => {
     setUser({password, email: user.email});
+  };
+
+  const onSignUp = async () => {
+    try {
+      const response = await axios.post(`${API_ENDPOINT}/signup`, {
+        email: user.email,
+        password: user.password,
+      });
+
+      onSuccessfullyLogin(response.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -47,15 +67,15 @@ const LoginScreen = () => {
           <Text style={{color: 'black'}}>Forgot password?</Text>
         </View>
         <View style={{marginTop: 32}} />
-        <TouchableOpacity style={styles.btnLogin}>
-          <Text style={{fontSize: 20, color: 'white'}}>Login</Text>
+        <TouchableOpacity style={styles.btnLogin} onPress={onSignUp}>
+          <Text style={{fontSize: 20, color: 'white'}}>Sign Up</Text>
         </TouchableOpacity>
       </SafeAreaView>
     </View>
   );
 };
 
-export default LoginScreen;
+export default SignUpScreen;
 
 const styles = StyleSheet.create({
   containter: {
