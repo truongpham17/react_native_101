@@ -6,20 +6,15 @@ import SignUpScreen from './src/SignUp';
 import HomeScreen from './src/HomeScreen';
 import LoginScreen from './src/LoginScreen';
 import {User} from './src/types/user';
-
+import {store} from './src/store';
+import {Provider} from 'react-redux';
 const AuthStack = createNativeStackNavigator();
 
 const MainStack = createNativeStackNavigator();
 
-const AuthStackNavigator = ({
-  onSuccessfullyLogin,
-}: {
-  onSuccessfullyLogin: (user: User) => void;
-}) => (
+const AuthStackNavigator = () => (
   <AuthStack.Navigator initialRouteName="Sign Up">
-    <AuthStack.Screen name="Sign Up">
-      {() => <SignUpScreen onSuccessfullyLogin={onSuccessfullyLogin} />}
-    </AuthStack.Screen>
+    <AuthStack.Screen name="Sign Up">{() => <SignUpScreen />}</AuthStack.Screen>
     <AuthStack.Screen name="Login" component={LoginScreen} />
   </AuthStack.Navigator>
 );
@@ -33,21 +28,12 @@ const MainStackNavigator = () => (
 const App = () => {
   const [user, setUser] = useState<User>({email: '', password: '', token: ''});
 
-  const onSuccessfullyLogin = (user: User) => {
-    // @TODO
-    // handle store user data to storage
-    // navigate to homescreen
-    setUser(user);
-  };
-
   return (
-    <NavigationContainer>
-      {user.token ? (
-        <MainStackNavigator />
-      ) : (
-        <AuthStackNavigator onSuccessfullyLogin={onSuccessfullyLogin} />
-      )}
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        {user.token ? <MainStackNavigator /> : <AuthStackNavigator />}
+      </NavigationContainer>
+    </Provider>
   );
 };
 

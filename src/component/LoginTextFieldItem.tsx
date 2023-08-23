@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
     paddingStart: 10,
     color: 'black',
+    paddingVertical: 10,
   },
 });
 

@@ -10,12 +10,13 @@ import LoginTextfieldItem from '../component/LoginTextFieldItem';
 import axios from 'axios';
 import {API_ENDPOINT} from '../constant/url';
 import {User} from '../types/user';
+import {useSelector, useDispatch} from 'react-redux';
+import {saveUsername} from '../reducers/user';
 
-const SignUpScreen = ({
-  onSuccessfullyLogin,
-}: {
-  onSuccessfullyLogin: (user: User) => void;
-}) => {
+const SignUpScreen = () => {
+  const userName = useSelector(state => state.user.username);
+  const dispatch = useDispatch();
+
   const [user, setUser] = useState({
     email: '',
     password: '',
@@ -30,16 +31,7 @@ const SignUpScreen = ({
   };
 
   const onSignUp = async () => {
-    try {
-      const response = await axios.post(`${API_ENDPOINT}/signup`, {
-        email: user.email,
-        password: user.password,
-      });
-
-      onSuccessfullyLogin(response.data);
-    } catch (error) {
-      console.log(error);
-    }
+    dispatch(saveUsername(user.email));
   };
 
   return (
@@ -70,6 +62,13 @@ const SignUpScreen = ({
         <TouchableOpacity style={styles.btnLogin} onPress={onSignUp}>
           <Text style={{fontSize: 20, color: 'white'}}>Sign Up</Text>
         </TouchableOpacity>
+
+        <Text style={{paddingVertical: 15}}>
+          USERNAME FROM REDUCER: {userName}
+        </Text>
+
+        {/* TODO HOMEWORK*/}
+        <Text>PASSWORD FROM REDUCER: </Text>
       </SafeAreaView>
     </View>
   );
